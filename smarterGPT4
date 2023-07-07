@@ -1,0 +1,101 @@
+import openai, time
+import tkinter as tk
+from threading import Thread
+
+file = open("/path/to/openai/key.txt", "r")
+
+# Read the contents of the file into a string variable
+string = file.read().rstrip()
+
+# Close the file
+file.close()
+
+openai.api_key = string
+
+model_id = 'gpt-4' # change to gpt3 turbo if needed
+
+def generate_gpt_response(messages, max_tokens=100): # increase max_tokens as needed
+    response = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=messages,
+        max_tokens=max_tokens,
+        n=1,
+        stop=None,
+        temperature=0.5,
+    )
+    return response.choices[0].message['content'].strip()
+
+def get_response(user_message):
+    prefixer_message = f"Question. {user_message} Answer: \
+        Let's work this out in a step by step way to be sure we have the right answer."
+    answer_options = []
+    for i in range(3):
+        answer_option = generate_gpt_response([{'role':'user', 'content': prefixer_message}])
+        answer_options.append(f'Answer Option {i+1}:{answer_option}')
+    researcher_prompt = f'"{user_message}"\n\n' + "\n".join(answer_options)
+    researcher_prompt += '\n\nYou are a researcher tasked with investigating the three answer options provided. List the flaws and faulty logic of each answer option. Lets think step by step:'
+    researcher_response = generate_gpt_response([{'role':'user', 'content': researcher_prompt}])
+    
+    # Resolver role
+    resolver_prompt = f'Based on the researcher\'s feedback: "{researcher_response}", improve the best answer option and provide a final response.'
+    resolver_response = generate_gpt_response([{'role':'user', 'content': resolver_prompt}], max_tokens=100) # increase max_tokens as needed
+    return resolver_response
+
+def submit(root, question_entry, response_text_widget, time_text, running):
+    start_time = time.time()
+    user_message = question_entry.get()
+    response_text_widget.delete(1.0, tk.END)
+    response_text_widget.insert(tk.END, "Generating response...")
+    running.set(True)
+    root.after(1, update_time, root, start_time, time_text, running)
+    Thread(target=update_response, args=(root, user_message, start_time, response_text_widget, time_text, running)).start()
+    root.update_idletasks()
+
+
+def update_time(root, start_time, time_text, running):
+    if running.get():
+        time_text.set(f"Time elapsed: {time.time() - start_time} seconds")
+        root.after(1000, update_time, root, start_time, time_text, running)
+
+def update_response(root, user_message, start_time, response_text_widget, time_text, running):
+    try:
+        response = get_response(user_message)
+        response_text_widget.delete(1.0, tk.END)
+        response_text_widget.insert(tk.END, response)
+        running.set(False)
+    except Exception as e:
+        response_text_widget.delete(1.0, tk.END)
+        response_text_widget.insert(tk.END, f"An error occurred: {str(e)}")
+        root.after(1000, update_response, root, user_message, start_time, response_text_widget, time_text, running)
+
+def main():
+    root = tk.Tk()
+    root.title("GPT-3.5-turbo App")
+
+    question_entry = tk.Entry(root)
+    question_entry.pack()
+
+    response_frame = tk.Frame(root, width=400, height=400)
+    response_frame.pack()
+    scrollbar = tk.Scrollbar(response_frame)
+    scrollbar.pack(side="right", fill="y")
+    response_text_widget = tk.Text(response_frame, wrap=tk.WORD, yscrollcommand=scrollbar.set)
+    response_text_widget.pack(side="left", fill="both")
+    scrollbar.config(command=response_text_widget.yview)
+
+    time_text = tk.StringVar()
+    time_text.set("Time elapsed will appear here...")
+    time_label = tk.Label(root, textvariable=time_text)
+    time_label.pack()
+
+    running = tk.BooleanVar(value=False)
+    submit_button = tk.Button(root, text="Submit", command=lambda: submit(root, question_entry, response_text_widget, time_text, running))
+    submit_button.pack()
+
+    quit_button = tk.Button(root, text="Quit", command=root.destroy)
+    quit_button.pack()
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
