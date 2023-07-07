@@ -2,7 +2,8 @@ import openai, time
 import tkinter as tk
 from threading import Thread
 
-file = open("/path/to/openai/key.txt", "r")
+
+file = open("/path/to/your/openai/key.txt", "r")
 
 # Read the contents of the file into a string variable
 string = file.read().rstrip()
@@ -12,11 +13,13 @@ file.close()
 
 openai.api_key = string
 
-model_id = 'gpt-4' # change to 'gpt-3.5-turbo' if needed
+model_id = 'gpt-4'  #also 'gpt-3.5-turbo'
+
+
 
 def generate_gpt_response(messages, max_tokens=100): # increase max_tokens as needed
     response = openai.ChatCompletion.create(
-        model=model_id ,
+        model=model_id,
         messages=messages,
         max_tokens=max_tokens,
         n=1,
@@ -70,10 +73,17 @@ def update_response(root, user_message, start_time, response_text_widget, time_t
 
 def main():
     root = tk.Tk()
-    root.title("SmarterGPT App")
+    root.title("SmarterGPT4 App")
 
-    question_entry = tk.Entry(root)
-    question_entry.pack()
+    question_frame = tk.Frame(root)
+    question_frame.pack()
+
+    question_label = tk.Label(question_frame, text="Ask here:", foreground="blue")
+    question_label.pack(side="left")
+
+    question_entry = tk.Entry(question_frame, width=60)
+    question_entry.pack(side="left")
+    question_entry.insert(0, "What is the difference between black and white?")  # Set placeholder text
 
     response_frame = tk.Frame(root, width=400, height=400)
     response_frame.pack()
