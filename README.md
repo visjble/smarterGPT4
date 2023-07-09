@@ -44,7 +44,6 @@ This script operates by first generating three potential responses from the Open
 
 - You may need to increase `max_tokens` in the `generate_gpt_response` function if you are dealing with particularly long queries or responses.
 - The temperature in the `generate_gpt_response` function can be tweaked to influence the randomness of the model's responses (lower values make the output more deterministic, higher values increase randomness).
-- [![Buy me a tea](https://img.shields.io/badge/Buy%20me%20a%20coffee--yellow.svg?logo=buy-me-a-coffee&logoColor=orange&style=social)](https://www.buymeacoffee.com/vjsible)
 
 
 ## Caution
@@ -52,3 +51,4 @@ This script operates by first generating three potential responses from the Open
 Remember to securely store your OpenAI API key and not to expose it in your scripts or share it with others.
 
 This application is just an example of what you can do with GPT-3.5-turbo. Always remember to use AI responsibly and ethically.
+- [![Buy me a tea](https://img.shields.io/badge/Buy%20me%20a%20coffee--red.svg?logo=buy-me-a-coffee&logoColor=orange&style=social)](https://www.buymeacoffee.com/vjsible)
