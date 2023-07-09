@@ -1,4 +1,4 @@
-<script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="vjsible" data-color="#FFDD00" data-emoji=""  data-font="Cookie" data-text="Buy me a tea" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+
 
 # SmarterGPT4 App
 Leverages Philip's sample code to query gpt4's responses and improve them (possibly):)
@@ -44,6 +44,8 @@ This script operates by first generating three potential responses from the Open
 
 - You may need to increase `max_tokens` in the `generate_gpt_response` function if you are dealing with particularly long queries or responses.
 - The temperature in the `generate_gpt_response` function can be tweaked to influence the randomness of the model's responses (lower values make the output more deterministic, higher values increase randomness).
+- [![Buy me a tea](https://img.shields.io/badge/Buy%20me%20a%20coffee--yellow.svg?logo=buy-me-a-coffee&logoColor=orange&style=social)](https://www.buymeacoffee.com/vjsible)
+
 
 ## Caution
 
