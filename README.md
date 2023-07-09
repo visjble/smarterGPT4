@@ -51,4 +51,4 @@ This script operates by first generating three potential responses from the Open
 Remember to securely store your OpenAI API key and not to expose it in your scripts or share it with others.
 
 This application is just an example of what you can do with GPT-3.5-turbo. Always remember to use AI responsibly and ethically.
-- [![Buy me a tea](https://img.shields.io/badge/Buy%20me%20a%20coffee--red.svg?logo=buy-me-a-coffee&logoColor=orange&style=social)](https://www.buymeacoffee.com/vjsible)
+- [![Buy me a tea](https://img.shields.io/badge/Buy%20me%20a%20coffee--yellow.svg?logo=buy-me-a-coffee)](https://www.buymeacoffee.com/vjsible)
