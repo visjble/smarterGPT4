@@ -1,7 +1,7 @@
 
 
 # SmarterGPT4 App
-Leverages Philip's sample code to query gpt4's responses and improve them (possibly):)
+Query gpt4's for multiple resopnses and have it choose the best one.
 https://www.youtube.com/@ai-explained-/about
 
 This Python application leverages the capabilities of OpenAI's GPT-4 model to generate responses to user-input questions. The application is built using the Tkinter library for creating a simple and user-friendly GUI.
